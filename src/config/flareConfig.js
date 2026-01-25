@@ -1,25 +1,26 @@
-// Flare Mainnet Configuration
+// Flare Testnet Configuration (Coston2)
 export const FLARE_CONFIG = {
-  chainId: 14,
-  chainName: 'Flare Mainnet',
-  rpcUrl: 'https://flare-api.flare.network/ext/C/rpc',
-  explorerUrl: 'https://flare-explorer.flare.network',
-  explorerApi: 'https://flare-explorer.flare.network/api',
+  chainId: 114,
+  chainName: 'Flare Testnet Coston2',
+  rpcUrl: 'https://coston2-api.flare.network/ext/C/rpc',
+  explorerUrl: 'https://coston2-explorer.flare.network',
+  explorerApi: 'https://coston2-explorer.flare.network/api',
   nativeCurrency: {
-    name: 'Flare',
-    symbol: 'FLR',
+    name: 'Coston2 Flare',
+    symbol: 'C2FLR',
     decimals: 18
   }
 };
 
-// USDT0 Token Configuration
+// Test USDT Token Configuration (for Coston2 testnet)
+// You can deploy your own ERC20 test token or use an existing one
 export const USDT0_CONFIG = {
-  // This address needs to be fetched from Flare explorer
-  // Common USDT0 addresses on Flare mainnet (verify via explorer):
-  address: '0x96B41289D90444B8adD57e6F265DB5aE8651DF29', // Verify this address
+  // Test token address on Coston2 - deploy your own ERC20 token for testing
+  // or use this placeholder (you'll need to deploy a test token)
+  address: '0x0000000000000000000000000000000000000000', // Replace with your test token
   decimals: 6,
-  symbol: 'USDT0',
-  name: 'Tether USD (Bridged from Ethereum)'
+  symbol: 'TUSDT',
+  name: 'Test USDT (Coston2 Testnet)'
 };
 
 // ERC20 ABI (minimal for USDT0 operations)

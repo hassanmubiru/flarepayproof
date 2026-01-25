@@ -155,7 +155,8 @@ const PaymentPage = () => {
 
         {/* Network Info */}
         <div className="mt-6 text-center text-sm text-gray-500">
-          <p>Payment will be executed on Flare Mainnet</p>
+          <p>Payment will be executed on Flare Testnet (Coston2)</p>
+          <p className="text-xs text-yellow-600 mt-1">🧪 Using test tokens - No real value</p>
         </div>
       </div>
     </div>

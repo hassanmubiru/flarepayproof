@@ -85,18 +85,33 @@ The production build will be in the `build/` directory.
 
 ## 🌐 Network Configuration
 
-### Flare Mainnet Details
+### Flare Testnet (Coston2) - Current Configuration
 
-- **Chain ID**: 14
-- **RPC URL**: https://flare-api.flare.network/ext/C/rpc
-- **Explorer**: https://flare-explorer.flare.network
-- **Native Token**: FLR (for gas)
+- **Chain ID**: 114
+- **RPC URL**: https://coston2-api.flare.network/ext/C/rpc
+- **Explorer**: https://coston2-explorer.flare.network
+- **Native Token**: C2FLR (for gas)
+- **Faucet**: https://faucet.flare.network
 
-### USDT0 Token
+### Test USDT Token
 
-- **Contract**: `0x96B41289D90444B8adD57e6F265DB5aE8651DF29` (verify on explorer)
+- **Contract**: Deploy your own ERC20 test token
 - **Decimals**: 6
-- **Symbol**: USDT0
+- **Symbol**: TUSDT
+- **Get Test Tokens**: Deploy a test ERC20 contract or use faucet
+
+### 🚀 Getting Testnet Tokens
+
+1. **Get C2FLR (for gas)**:
+   - Visit https://faucet.flare.network
+   - Connect your wallet
+   - Select Coston2 network
+   - Request test tokens
+
+2. **Get Test USDT**:
+   - Deploy your own ERC20 test token contract
+   - Or use the SimpleToken.sol contract included in `/contracts`
+   - Mint yourself test tokens for testing
 
 ## 📖 How to Use
 

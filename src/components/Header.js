@@ -24,6 +24,7 @@ const Header = () => {
             <div>
               <h1 className="text-2xl font-bold">FlarePayProof</h1>
               <p className="text-xs text-gray-400">USDT0 Payments with ProofRails</p>
+              <p className="text-xs text-yellow-400 font-semibold">🧪 TESTNET MODE (Coston2)</p>
             </div>
           </div>
 

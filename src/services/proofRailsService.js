@@ -16,14 +16,14 @@ class ProofRailsService {
           'Authorization': `Bearer ${this.apiKey}`
         },
         body: JSON.stringify({
-          network: 'flare',
+          network: 'flare-testnet',
           txHash: transactionData.txHash,
           amount: transactionData.amount,
           sender: transactionData.sender,
           recipient: transactionData.recipient,
           memo: transactionData.memo,
           timestamp: transactionData.timestamp,
-          currency: 'USDT0'
+          currency: 'TUSDT'
         })
       });
 
@@ -83,19 +83,19 @@ class ProofRailsService {
           },
           instructedAmount: {
             value: transactionData.amount,
-            currency: 'USDT0'
+            currency: 'TUSDT'
           },
           remittanceInformation: {
-            unstructured: transactionData.memo || 'USDT0 Payment'
+            unstructured: transactionData.memo || 'Test USDT Payment (Testnet)'
           }
         },
         supplementaryData: {
           blockchain: 'Flare',
-          network: 'mainnet',
+          network: 'testnet-coston2',
           transactionHash: transactionData.txHash,
           blockNumber: transactionData.blockNumber,
           timestamp: transactionData.timestamp,
-          tokenContract: '0x96B41289D90444B8adD57e6F265DB5aE8651DF29'
+          tokenContract: '0x0000000000000000000000000000000000000000'
         }
       },
       verification: {
