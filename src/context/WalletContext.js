@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { BrowserProvider, Contract, formatUnits, parseUnits } from 'ethers';
+import { BrowserProvider, Contract, formatUnits } from 'ethers';
 import { FLARE_CONFIG, USDT0_CONFIG, ERC20_ABI } from '../config/flareConfig';
 
 // Wallet state reducer
@@ -137,18 +137,21 @@ export const WalletProvider = ({ children }) => {
 
   // Listen for account changes
   useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', (accounts) => {
-        if (accounts.length === 0) {
-          disconnectWallet();
-        } else {
-          connectWallet();
-        }
-      });
+    const handleAccountsChanged = (accounts) => {
+      if (accounts.length === 0) {
+        disconnectWallet();
+      } else {
+        connectWallet();
+      }
+    };
 
-      window.ethereum.on('chainChanged', () => {
-        window.location.reload();
-      });
+    const handleChainChanged = () => {
+      window.location.reload();
+    };
+
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('chainChanged', handleChainChanged);
     }
 
     return () => {
@@ -157,6 +160,7 @@ export const WalletProvider = ({ children }) => {
         window.ethereum.removeAllListeners('chainChanged');
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const value = {

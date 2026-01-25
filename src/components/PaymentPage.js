@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { usePayment } from '../context/PaymentContext';
 import { useWallet } from '../context/WalletContext';
 import { useSearchParams } from 'react-router-dom';
@@ -15,7 +15,7 @@ const PaymentPage = () => {
   const memo = searchParams.get('memo');
 
   const { executeTransfer, getExplorerLink } = usePayment();
-  const { account, balance, isConnected, connectWallet } = useWallet();
+  const { balance, isConnected, connectWallet } = useWallet();
 
   const handlePay = async () => {
     if (!isConnected) {

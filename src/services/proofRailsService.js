@@ -120,4 +120,5 @@ class ProofRailsService {
   }
 }
 
-export default new ProofRailsService();
+const proofRailsService = new ProofRailsService();
+export default proofRailsService;

@@ -8,7 +8,6 @@ const Dashboard = () => {
   const [filter, setFilter] = useState('all');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
-  const [selectedPayment, setSelectedPayment] = useState(null);
   const [generatingProof, setGeneratingProof] = useState(false);
 
   const { payments, loadPaymentsFromStorage, getExplorerLink } = usePayment();
@@ -16,6 +15,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadPaymentsFromStorage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filteredPayments = payments.filter(payment => {
