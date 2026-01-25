@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { usePayment } from '../context/PaymentContext';
 import { useWallet } from '../context/WalletContext';
-import QRCode from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 
 const CreatePayment = ({ onPaymentCreated }) => {
   const [amount, setAmount] = useState('');
@@ -100,7 +100,7 @@ const CreatePayment = ({ onPaymentCreated }) => {
         {/* QR Code */}
         <div className="flex justify-center mb-6">
           <div className="p-4 bg-white rounded-lg border-2 border-gray-200">
-            <QRCode value={paymentLink} size={200} level="H" />
+            <QRCodeSVG value={paymentLink} size={200} level="H" />
           </div>
         </div>
 
