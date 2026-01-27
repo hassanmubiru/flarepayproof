@@ -201,60 +201,65 @@ const CreatePayment = ({ onPaymentCreated }) => {
       
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Amount */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Amount (USDT0) *
+        <div className="group">
+          <label className="block text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+            Amount (USDT0) <span className="text-flare-primary">*</span>
           </label>
-          <input
-            type="number"
-            step="0.01"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="0.00"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-flare-primary focus:border-transparent text-lg"
-            required
-          />
+          <div className="relative">
+            <input
+              type="number"
+              step="0.01"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="0.00"
+              className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-flare-primary text-2xl font-bold text-gray-900 placeholder-gray-300 transition-all duration-200"
+              required
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 px-3 py-1 bg-gradient-to-r from-flare-primary to-flare-secondary text-white text-sm font-bold rounded-lg">
+              USDT0
+            </div>
+          </div>
         </div>
 
         {/* Recipient Address */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Recipient Address *
+          <label className="block text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+            Recipient Address <span className="text-flare-primary">*</span>
           </label>
           <input
             type="text"
             value={recipient}
             onChange={(e) => setRecipient(e.target.value)}
             placeholder="0x..."
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-flare-primary focus:border-transparent font-mono text-sm"
+            className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-flare-primary font-mono text-sm transition-all duration-200"
             required
           />
         </div>
 
         {/* Memo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Memo (Optional)
+          <label className="block text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+            Memo <span className="text-gray-400 text-xs normal-case font-normal">(Optional)</span>
           </label>
           <input
             type="text"
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
-            placeholder="Payment description..."
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-flare-primary focus:border-transparent"
+            placeholder="Payment for services..."
+            className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-flare-primary transition-all duration-200"
           />
         </div>
 
         {/* Expiry */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Expiry Date (Optional)
+          <label className="block text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+            Expiry Date <span className="text-gray-400 text-xs normal-case font-normal">(Optional)</span>
           </label>
           <input
             type="datetime-local"
             value={expiry}
             onChange={(e) => setExpiry(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-flare-primary focus:border-transparent"
+            className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-flare-primary transition-all duration-200"
           />
         </div>
 
@@ -262,11 +267,42 @@ const CreatePayment = ({ onPaymentCreated }) => {
         <button
           type="submit"
           disabled={!isConnected}
-          className="w-full px-6 py-4 bg-flare-primary text-white rounded-lg hover:bg-red-600 font-semibold text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`w-full px-6 py-5 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center space-x-3 ${
+            isConnected 
+              ? 'bg-gradient-to-r from-flare-primary to-flare-secondary text-white hover:shadow-glow-lg hover:scale-[1.02]' 
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+          }`}
         >
-          {isConnected ? 'Create Payment Request' : 'Connect Wallet First'}
+          {isConnected ? (
+            <>
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd"/>
+              </svg>
+              <span>Create Payment Request</span>
+            </>
+          ) : (
+            <>
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"/>
+              </svg>
+              <span>Connect Wallet First</span>
+            </>
+          )}
         </button>
       </form>
+
+      {/* Info Banner */}
+      {!isConnected && (
+        <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start space-x-3">
+          <svg className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+          </svg>
+          <div>
+            <p className="text-sm font-medium text-amber-800">Wallet Not Connected</p>
+            <p className="text-sm text-amber-600 mt-1">Please connect your wallet to create payment requests.</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
