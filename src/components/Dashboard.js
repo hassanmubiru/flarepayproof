@@ -147,36 +147,77 @@ const Dashboard = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-100 text-yellow-800';
-      case 'confirming': return 'bg-blue-100 text-blue-800';
-      case 'confirmed': return 'bg-green-100 text-green-800';
-      case 'failed': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'pending': return 'bg-amber-100 text-amber-800 border border-amber-200';
+      case 'confirming': return 'bg-blue-100 text-blue-800 border border-blue-200';
+      case 'confirmed': return 'bg-emerald-100 text-emerald-800 border border-emerald-200';
+      case 'failed': return 'bg-red-100 text-red-800 border border-red-200';
+      default: return 'bg-gray-100 text-gray-800 border border-gray-200';
+    }
+  };
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'pending': return (
+        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
+        </svg>
+      );
+      case 'confirming': return (
+        <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+        </svg>
+      );
+      case 'confirmed': return (
+        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+        </svg>
+      );
+      case 'failed': return (
+        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"/>
+        </svg>
+      );
+      default: return null;
     }
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Transaction History</h2>
+    <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-gray-200/50">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center space-x-4">
+          <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+            <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Transaction History</h2>
+            <p className="text-gray-500">View and manage your payments</p>
+          </div>
+        </div>
         <button
           onClick={() => { loadPaymentsFromStorage(); refreshBalance(); }}
-          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors"
+          className="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-200 hover:scale-105 flex items-center space-x-2 font-medium text-gray-700"
         >
-          Refresh
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd"/>
+          </svg>
+          <span>Refresh</span>
         </button>
       </div>
 
       {/* Filters */}
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-gray-50/50 rounded-2xl border border-gray-100">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+          <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Status</label>
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-flare-primary"
+            className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:border-flare-primary bg-white font-medium text-gray-700"
           >
-            <option value="all">All</option>
+            <option value="all">All Transactions</option>
             <option value="pending">Pending</option>
             <option value="confirming">Confirming</option>
             <option value="confirmed">Confirmed</option>
@@ -184,22 +225,30 @@ const Dashboard = () => {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">From Date</label>
+          <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">From Date</label>
           <input
             type="date"
             value={dateFrom}
             onChange={(e) => setDateFrom(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-flare-primary"
+            className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:border-flare-primary bg-white"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">To Date</label>
+          <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">To Date</label>
           <input
             type="date"
             value={dateTo}
             onChange={(e) => setDateTo(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-flare-primary"
+            className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:border-flare-primary bg-white"
           />
+        </div>
+        <div className="flex items-end">
+          <button
+            onClick={() => { setFilter('all'); setDateFrom(''); setDateTo(''); }}
+            className="w-full px-4 py-2.5 text-gray-500 hover:text-gray-700 font-medium rounded-xl hover:bg-gray-100 transition-colors"
+          >
+            Clear Filters
+          </button>
         </div>
       </div>
 
