@@ -133,9 +133,9 @@ function App() {
                         <div>
                           <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Product</h4>
                           <ul className="space-y-3">
-                            <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Create Payment</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Transaction History</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Generate Proofs</a></li>
+                            <li><button onClick={() => setActiveTab('create')} className="text-gray-400 hover:text-white transition-colors text-sm text-left">Create Payment</button></li>
+                            <li><button onClick={() => setActiveTab('dashboard')} className="text-gray-400 hover:text-white transition-colors text-sm text-left">Transaction History</button></li>
+                            <li><button onClick={() => setActiveTab('dashboard')} className="text-gray-400 hover:text-white transition-colors text-sm text-left">Generate Proofs</button></li>
                           </ul>
                         </div>
                         <div>
