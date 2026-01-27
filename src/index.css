@@ -91,12 +91,3 @@ input:focus, select:focus, textarea:focus {
 .btn-secondary:hover {
   background-color: #E2E8F0;
 }
-  box-shadow: 0 0 0 3px rgba(229, 64, 51, 0.1);
-}
-
-/* Shimmer loading effect */
-.shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite linear;
-}
