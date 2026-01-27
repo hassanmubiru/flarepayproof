@@ -254,84 +254,109 @@ const Dashboard = () => {
 
       {/* Payments List */}
       {filteredPayments.length === 0 ? (
-        <div className="text-center py-12">
-          <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          <p className="text-gray-500">No transactions found</p>
+        <div className="text-center py-16">
+          <div className="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <svg className="w-10 h-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">No Transactions Yet</h3>
+          <p className="text-gray-500">Create your first payment request to get started</p>
         </div>
       ) : (
         <div className="space-y-4">
-          {filteredPayments.map((payment) => (
-            <div key={payment.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+          {filteredPayments.map((payment, index) => (
+            <div 
+              key={payment.id} 
+              className="bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-lg transition-all duration-300 hover:border-gray-300 card-hover"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(payment.status)}`}>
-                      {payment.status}
+                  <div className="flex items-center space-x-3 mb-3">
+                    <span className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center space-x-1.5 ${getStatusColor(payment.status)}`}>
+                      {getStatusIcon(payment.status)}
+                      <span className="capitalize">{payment.status}</span>
                     </span>
                     {payment.proofId && (
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800">
-                        Proof Generated
+                      <span className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-200 flex items-center space-x-1.5">
+                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                        </svg>
+                        <span>Verified</span>
                       </span>
                     )}
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                    <div>
-                      <span className="text-gray-600">Amount:</span>
-                      <span className="font-semibold ml-2">{payment.amount} USDT0</span>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="bg-gray-50 rounded-xl p-3">
+                      <span className="text-xs text-gray-500 uppercase tracking-wide font-medium">Amount</span>
+                      <div className="text-xl font-bold gradient-text">{payment.amount} USDT0</div>
                     </div>
-                    <div>
-                      <span className="text-gray-600">Recipient:</span>
-                      <span className="font-mono text-xs ml-2">{payment.recipient.substring(0, 10)}...</span>
+                    <div className="bg-gray-50 rounded-xl p-3">
+                      <span className="text-xs text-gray-500 uppercase tracking-wide font-medium">Recipient</span>
+                      <div className="font-mono text-sm text-gray-700">{payment.recipient.substring(0, 10)}...{payment.recipient.slice(-6)}</div>
                     </div>
-                    <div>
-                      <span className="text-gray-600">Created:</span>
-                      <span className="ml-2">{new Date(payment.createdAt).toLocaleString()}</span>
+                    <div className="bg-gray-50 rounded-xl p-3">
+                      <span className="text-xs text-gray-500 uppercase tracking-wide font-medium">Created</span>
+                      <div className="text-sm text-gray-700 font-medium">{new Date(payment.createdAt).toLocaleDateString()}</div>
+                      <div className="text-xs text-gray-400">{new Date(payment.createdAt).toLocaleTimeString()}</div>
                     </div>
-                    {payment.memo && (
-                      <div>
-                        <span className="text-gray-600">Memo:</span>
-                        <span className="ml-2">{payment.memo}</span>
-                      </div>
-                    )}
                   </div>
+                  {payment.memo && (
+                    <div className="mt-3 px-3 py-2 bg-blue-50 rounded-lg border border-blue-100">
+                      <span className="text-xs text-blue-600 font-medium">Memo:</span>
+                      <span className="text-sm text-blue-800 ml-2">{payment.memo}</span>
+                    </div>
+                  )}
                   {payment.txHash && (
-                    <div className="mt-2">
+                    <div className="mt-3">
                       <a
                         href={getExplorerLink(payment.txHash)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-flare-primary hover:underline text-sm font-mono"
+                        className="inline-flex items-center space-x-2 text-flare-primary hover:text-flare-secondary text-sm font-medium transition-colors"
                       >
-                        View on Explorer →
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
+                          <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/>
+                        </svg>
+                        <span>View on Explorer</span>
                       </a>
                     </div>
                   )}
                 </div>
-                <div className="ml-4 flex flex-col space-y-2">
+                <div className="ml-6 flex flex-col space-y-2">
                   {payment.status === 'confirmed' && !payment.proofId && (
                     <button
                       onClick={() => handleGenerateProof(payment)}
                       disabled={generatingProof}
-                      className="px-4 py-2 bg-purple-600 text-white text-sm rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
+                      className="px-4 py-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-sm rounded-xl hover:shadow-lg transition-all duration-300 disabled:opacity-50 font-medium flex items-center space-x-2"
                     >
-                      Generate Proof
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      </svg>
+                      <span>Generate Proof</span>
                     </button>
                   )}
                   {payment.proofId && (
                     <>
                       <button
                         onClick={() => handleDownloadProofJSON(payment)}
-                        className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
+                        className="px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-xl transition-all duration-300 font-medium flex items-center space-x-2"
                       >
-                        Download JSON
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd"/>
+                        </svg>
+                        <span>JSON</span>
                       </button>
                       <button
                         onClick={() => handleDownloadProofPDF(payment)}
-                        className="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors"
+                        className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm rounded-xl transition-all duration-300 font-medium flex items-center space-x-2"
                       >
-                        Download PDF
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd"/>
+                        </svg>
+                        <span>PDF</span>
                       </button>
                     </>
                   )}
