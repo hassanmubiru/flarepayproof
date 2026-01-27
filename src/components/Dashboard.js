@@ -120,26 +120,26 @@ const Dashboard = () => {
 
   const getStatusBadge = (status) => {
     const styles = {
-      pending: 'bg-amber-50 text-amber-700 border-amber-200',
-      confirming: 'bg-blue-50 text-blue-700 border-blue-200',
-      confirmed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-      failed: 'bg-red-50 text-red-700 border-red-200',
+      pending: 'bg-accent-amber/20 text-accent-amber border-accent-amber/30',
+      confirming: 'bg-accent-blue/20 text-accent-blue border-accent-blue/30',
+      confirmed: 'bg-accent-green/20 text-accent-green border-accent-green/30',
+      failed: 'bg-red-500/20 text-red-400 border-red-500/30',
     };
-    return styles[status] || 'bg-slate-50 text-slate-700 border-slate-200';
+    return styles[status] || 'bg-dark-600 text-gray-400 border-dark-500';
   };
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-card">
+    <div className="bg-dark-800 rounded-xl border border-dark-600">
       {/* Header */}
-      <div className="p-6 border-b border-slate-100">
+      <div className="p-6 border-b border-dark-700">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900">Transactions</h2>
-            <p className="text-sm text-slate-500">{filteredPayments.length} payment{filteredPayments.length !== 1 ? 's' : ''}</p>
+            <h2 className="text-lg font-semibold text-gray-100">Transactions</h2>
+            <p className="text-sm text-gray-400">{filteredPayments.length} payment{filteredPayments.length !== 1 ? 's' : ''}</p>
           </div>
           <button
             onClick={() => { loadPaymentsFromStorage(); refreshBalance(); }}
-            className="px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+            className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-gray-200 hover:bg-dark-700 rounded-lg transition-colors"
           >
             Refresh
           </button>
@@ -147,14 +147,14 @@ const Dashboard = () => {
       </div>
 
       {/* Filters */}
-      <div className="p-4 border-b border-slate-100 bg-slate-50/50">
+      <div className="p-4 border-b border-dark-700 bg-dark-800/50">
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">Status</label>
+            <label className="block text-xs font-medium text-gray-400 mb-1">Status</label>
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white"
+              className="w-full px-3 py-2 border border-dark-600 rounded-lg text-sm bg-dark-700 text-gray-100"
             >
               <option value="all">All</option>
               <option value="pending">Pending</option>
@@ -164,27 +164,27 @@ const Dashboard = () => {
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">From</label>
+            <label className="block text-xs font-medium text-gray-400 mb-1">From</label>
             <input
               type="date"
               value={dateFrom}
               onChange={(e) => setDateFrom(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white"
+              className="w-full px-3 py-2 border border-dark-600 rounded-lg text-sm bg-dark-700 text-gray-100"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-500 mb-1">To</label>
+            <label className="block text-xs font-medium text-gray-400 mb-1">To</label>
             <input
               type="date"
               value={dateTo}
               onChange={(e) => setDateTo(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white"
+              className="w-full px-3 py-2 border border-dark-600 rounded-lg text-sm bg-dark-700 text-gray-100"
             />
           </div>
           <div className="flex items-end">
             <button
               onClick={() => { setFilter('all'); setDateFrom(''); setDateTo(''); }}
-              className="w-full px-3 py-2 text-sm text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+              className="w-full px-3 py-2 text-sm text-gray-400 hover:text-gray-200 hover:bg-dark-700 rounded-lg transition-colors"
             >
               Clear
             </button>
@@ -195,18 +195,18 @@ const Dashboard = () => {
       {/* Payments List */}
       {filteredPayments.length === 0 ? (
         <div className="p-12 text-center">
-          <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 bg-dark-700 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <h3 className="text-sm font-medium text-slate-900 mb-1">No Transactions</h3>
-          <p className="text-sm text-slate-500">Create a payment request to get started</p>
+          <h3 className="text-sm font-medium text-gray-100 mb-1">No Transactions</h3>
+          <p className="text-sm text-gray-400">Create a payment request to get started</p>
         </div>
       ) : (
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-dark-700">
           {filteredPayments.map((payment) => (
-            <div key={payment.id} className="p-5 hover:bg-slate-50/50 transition-colors">
+            <div key={payment.id} className="p-5 hover:bg-dark-700/50 transition-colors">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   {/* Status and amount row */}
@@ -214,19 +214,19 @@ const Dashboard = () => {
                     <span className={`px-2 py-1 rounded text-xs font-medium border ${getStatusBadge(payment.status)}`}>
                       {payment.status}
                     </span>
-                    <span className="text-lg font-semibold text-slate-900">{payment.amount} <span className="text-brand-500">USDT0</span></span>
+                    <span className="text-lg font-semibold text-gray-100">{payment.amount} <span className="text-brand-500">USDT0</span></span>
                     {payment.proofId && (
-                      <span className="px-2 py-1 rounded text-xs font-medium bg-purple-50 text-purple-700 border border-purple-200">
+                      <span className="px-2 py-1 rounded text-xs font-medium bg-accent-purple/20 text-accent-purple border border-accent-purple/30">
                         Verified
                       </span>
                     )}
                   </div>
                   
                   {/* Details */}
-                  <div className="text-sm text-slate-500 space-y-1">
+                  <div className="text-sm text-gray-400 space-y-1">
                     <p className="font-mono text-xs">{payment.recipient}</p>
                     <p>{new Date(payment.createdAt).toLocaleDateString()} at {new Date(payment.createdAt).toLocaleTimeString()}</p>
-                    {payment.memo && <p className="text-slate-600">{payment.memo}</p>}
+                    {payment.memo && <p className="text-gray-300">{payment.memo}</p>}
                   </div>
                   
                   {/* Explorer link */}
@@ -235,7 +235,7 @@ const Dashboard = () => {
                       href={getExplorerLink(payment.txHash)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-2 text-sm text-brand-500 hover:text-brand-600"
+                      className="inline-flex items-center gap-1 mt-2 text-sm text-brand-400 hover:text-brand-300"
                     >
                       View on Explorer
                       <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -251,7 +251,7 @@ const Dashboard = () => {
                     <button
                       onClick={() => handleGenerateProof(payment)}
                       disabled={generatingProof}
-                      className="px-3 py-2 bg-purple-500 hover:bg-purple-600 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+                      className="px-3 py-2 bg-accent-purple hover:bg-accent-purple/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
                     >
                       Generate Proof
                     </button>
@@ -260,7 +260,7 @@ const Dashboard = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleDownloadProofJSON(payment)}
-                        className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-colors"
+                        className="px-3 py-2 bg-dark-700 hover:bg-dark-600 text-gray-300 text-sm font-medium rounded-lg transition-colors border border-dark-600"
                       >
                         JSON
                       </button>
