@@ -120,19 +120,20 @@ class ProofRailsService {
             transactionIdentification: transactionData.txHash
           },
           paymentInformation: {
-          paymentInformationIdentification: `PMT${Date.now()}`,
-          debtorAccount: {
-            identification: transactionData.sender
-          },
-          creditorAccount: {
-            identification: transactionData.recipient
-          },
-          instructedAmount: {
-            value: transactionData.amount,
-            currency: 'TUSDT'
-          },
-          remittanceInformation: {
-            unstructured: transactionData.memo || 'Test USDT Payment (Testnet)'
+            paymentInformationIdentification: `PMT${Date.now()}`,
+            debtorAccount: {
+              identification: transactionData.sender
+            },
+            creditorAccount: {
+              identification: transactionData.recipient
+            },
+            instructedAmount: {
+              value: transactionData.amount,
+              currency: 'TUSDT'
+            },
+            remittanceInformation: {
+              unstructured: transactionData.memo || 'Test USDT Payment (Testnet)'
+            }
           }
         },
         // pain.001 - CustomerCreditTransferInitiation
