@@ -4,17 +4,17 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#E54033" />
+    <meta name="theme-color" content="#0F172A" />
     <meta
       name="description"
-      content="FlarePayProof - USDT0 Payments Portal with ProofRails on Flare Mainnet"
+      content="FlarePayProof - Enterprise USDT0 Payments with ProofRails on Flare"
     />
-    <title>FlarePayProof - USDT0 Payments with ProofRails</title>
+    <title>FlarePayProof - Enterprise Payments</title>
     
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,33 +25,21 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
+              sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
             },
             colors: {
-              flare: {
-                primary: '#E54033',
-                secondary: '#FF6B5B',
-                dark: '#0F0F14',
-                darker: '#0A0A0D',
-                light: '#F7F7F8',
-                accent: '#FF8A7A'
+              brand: {
+                50: '#FFF1F0',
+                100: '#FFE4E1',
+                500: '#E54033',
+                600: '#C9302B',
+                700: '#A82520',
               }
             },
-            backgroundImage: {
-              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-              'flare-gradient': 'linear-gradient(135deg, #E54033 0%, #FF6B5B 50%, #FF8A7A 100%)',
-              'dark-gradient': 'linear-gradient(135deg, #0F0F14 0%, #1A1B23 50%, #252530 100%)',
-            },
             boxShadow: {
-              'glow': '0 0 20px rgba(229, 64, 51, 0.3)',
-              'glow-lg': '0 0 40px rgba(229, 64, 51, 0.4)',
-              'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-              'card-hover': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-            },
-            animation: {
-              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'float': 'float 6s ease-in-out infinite',
-              'glow': 'glow 2s ease-in-out infinite alternate',
+              'soft': '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06)',
+              'card': '0 1px 3px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.05)',
+              'elevated': '0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.05)',
             },
           }
         }
@@ -59,29 +47,15 @@
     </script>
     
     <style>
-      @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-      }
-      @keyframes glow {
-        from { box-shadow: 0 0 20px rgba(229, 64, 51, 0.2); }
-        to { box-shadow: 0 0 30px rgba(229, 64, 51, 0.4); }
-      }
-      .glass {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-      .glass-dark {
-        background: rgba(15, 15, 20, 0.8);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
+      * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+      :focus-visible { outline: 2px solid #E54033; outline-offset: 2px; }
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
     </style>
   </head>
-  <body>
+  <body class="bg-slate-50 text-slate-900">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
