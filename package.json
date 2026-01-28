@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@openzeppelin/contracts": "^5.4.0",
+    "@proofrails/sdk": "^1.6.0",
     "@supabase/supabase-js": "^2.91.1",
     "@tanstack/react-query": "^5.90.20",
     "@web3modal/wagmi": "^5.1.11",
