@@ -137,7 +137,8 @@ function App() {
             </div>
           </footer>
         </div>
-      </PaymentProvider>
+        </PaymentProvider>
+      </ProofRailsProvider>
     </WalletProvider>
   );
 }

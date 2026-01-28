@@ -2,7 +2,6 @@ import React, { createContext, useContext, useMemo } from 'react';
 import { 
   useProofRails, 
   useProofRailsPayment,
-  useReceiptDetails,
   useReceiptsList 
 } from '@proofrails/sdk/react';
 

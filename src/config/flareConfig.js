@@ -88,10 +88,15 @@ export const FDC_CONFIG = {
   fdcVerificationAddress: '0x...' // Retrieved via ContractRegistry
 };
 
-// ProofRails API Configuration (Legacy - now using FDC)
+// ProofRails SDK Configuration (from FlareStudio)
+// Get API key from: https://www.flarestudio.xyz/sdk/proofrails-sdk/create-api-key
 export const PROOFRAILS_CONFIG = {
-  apiUrl: 'https://api.proofrails.com/v1',
-  apiKey: process.env.REACT_APP_PROOFRAILS_API_KEY || ''
+  apiKey: process.env.REACT_APP_PROOFRAILS_API_KEY || '',
+  // SDK auto-detects network from wallet
+  // Generates ISO 20022 compliant receipts (PAIN.001, CAMT.053)
+  // Receipts are anchored on Flare network
+  verifyUrl: 'https://www.flarestudio.xyz/verify',
+  dashboardUrl: 'https://www.flarestudio.xyz/analytics-dashboard'
 };
 
 // WalletConnect Project ID
