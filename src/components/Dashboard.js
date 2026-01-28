@@ -144,42 +144,42 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="glass-card gradient-border rounded-2xl overflow-hidden">
+    <div className="glass-card gradient-border rounded-xl sm:rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="p-6 border-b border-white/5">
+      <div className="p-4 sm:p-6 border-b border-white/5">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-accent-purple to-accent-blue rounded-xl flex items-center justify-center shadow-glow-purple">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-accent-purple to-accent-blue rounded-lg sm:rounded-xl flex items-center justify-center shadow-glow-purple">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">Transactions</h2>
-              <p className="text-sm text-gray-400">{filteredPayments.length} payment{filteredPayments.length !== 1 ? 's' : ''} found</p>
+              <h2 className="text-lg sm:text-xl font-bold text-white">Transactions</h2>
+              <p className="text-xs sm:text-sm text-gray-400">{filteredPayments.length} payment{filteredPayments.length !== 1 ? 's' : ''}</p>
             </div>
           </div>
           <button
             onClick={() => { loadPaymentsFromStorage(); refreshBalance(); }}
-            className="px-4 py-2 text-sm font-semibold text-gray-400 hover:text-white hover:bg-dark-600 rounded-xl transition-all flex items-center gap-2 group"
+            className="p-2 sm:px-4 sm:py-2 text-sm font-semibold text-gray-400 hover:text-white hover:bg-dark-600 rounded-lg sm:rounded-xl transition-all flex items-center gap-2 group"
           >
             <svg className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
-            Refresh
+            <span className="hidden sm:inline">Refresh</span>
           </button>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="p-4 border-b border-white/5 bg-dark-800/30">
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+      <div className="p-3 sm:p-4 border-b border-white/5 bg-dark-800/30">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
           <div>
-            <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Status</label>
+            <label className="block text-[10px] sm:text-xs font-semibold text-gray-400 mb-1 sm:mb-1.5 uppercase tracking-wider">Status</label>
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="w-full px-4 py-2.5 border border-white/10 rounded-xl text-sm bg-dark-700/50 text-white focus:border-brand-500 focus:outline-none"
+              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-white/10 rounded-lg sm:rounded-xl text-xs sm:text-sm bg-dark-700/50 text-white focus:border-brand-500 focus:outline-none"
             >
               <option value="all">All</option>
               <option value="pending">Pending</option>
@@ -188,30 +188,30 @@ const Dashboard = () => {
               <option value="failed">Failed</option>
             </select>
           </div>
-          <div>
-            <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">From</label>
+          <div className="col-span-1 sm:col-span-1">
+            <label className="block text-[10px] sm:text-xs font-semibold text-gray-400 mb-1 sm:mb-1.5 uppercase tracking-wider">From</label>
             <input
               type="date"
               value={dateFrom}
               onChange={(e) => setDateFrom(e.target.value)}
-              className="w-full px-4 py-2.5 border border-white/10 rounded-xl text-sm bg-dark-700/50 text-white focus:border-brand-500 focus:outline-none"
+              className="w-full px-2 sm:px-4 py-2 sm:py-2.5 border border-white/10 rounded-lg sm:rounded-xl text-xs sm:text-sm bg-dark-700/50 text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">To</label>
+            <label className="block text-[10px] sm:text-xs font-semibold text-gray-400 mb-1 sm:mb-1.5 uppercase tracking-wider">To</label>
             <input
               type="date"
               value={dateTo}
               onChange={(e) => setDateTo(e.target.value)}
-              className="w-full px-4 py-2.5 border border-white/10 rounded-xl text-sm bg-dark-700/50 text-white focus:border-brand-500 focus:outline-none"
+              className="w-full px-2 sm:px-4 py-2 sm:py-2.5 border border-white/10 rounded-lg sm:rounded-xl text-xs sm:text-sm bg-dark-700/50 text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
           <div className="flex items-end">
             <button
               onClick={() => { setFilter('all'); setDateFrom(''); setDateTo(''); }}
-              className="w-full px-4 py-2.5 text-sm font-semibold text-gray-400 hover:text-white hover:bg-dark-600 rounded-xl transition-all"
+              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-gray-400 hover:text-white hover:bg-dark-600 rounded-lg sm:rounded-xl transition-all"
             >
-              Clear Filters
+              Clear
             </button>
           </div>
         </div>
@@ -231,32 +231,33 @@ const Dashboard = () => {
       ) : (
         <div className="divide-y divide-white/5">
           {filteredPayments.map((payment) => (
-            <div key={payment.id} className="p-6 hover:bg-dark-700/30 transition-all">
-              <div className="flex items-start justify-between gap-6">
+            <div key={payment.id} className="p-4 sm:p-6 hover:bg-dark-700/30 transition-all">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   {/* Status and amount row */}
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold border ${getStatusBadge(payment.status)}`}>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3">
+                    <span className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-bold border ${getStatusBadge(payment.status)}`}>
                       {getStatusIcon(payment.status)}
                       {payment.status}
                     </span>
-                    <span className="text-xl font-bold text-white">{payment.amount} <span className="text-brand-400">USDT0</span></span>
+                    <span className="text-lg sm:text-xl font-bold text-white">{payment.amount} <span className="text-brand-400">USDT0</span></span>
                     {payment.proofId && (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-accent-purple/20 text-accent-purple border border-accent-purple/30">
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                        ISO 20022 Verified
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] sm:text-xs font-bold bg-accent-purple/20 text-accent-purple border border-accent-purple/30">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        <span className="hidden sm:inline">ISO 20022 Verified</span>
+                        <span className="sm:hidden">Verified</span>
                       </span>
                     )}
                   </div>
                   
                   {/* Details */}
-                  <div className="text-sm text-gray-400 space-y-1.5">
-                    <p className="font-mono text-xs bg-dark-700/50 px-3 py-1.5 rounded-lg inline-block">{payment.recipient}</p>
-                    <p className="flex items-center gap-2">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                      {new Date(payment.createdAt).toLocaleDateString()} at {new Date(payment.createdAt).toLocaleTimeString()}
+                  <div className="text-xs sm:text-sm text-gray-400 space-y-1.5">
+                    <p className="font-mono text-[10px] sm:text-xs bg-dark-700/50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg inline-block break-all">{payment.recipient}</p>
+                    <p className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-sm">
+                      <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                      {new Date(payment.createdAt).toLocaleDateString()}
                     </p>
-                    {payment.memo && <p className="text-gray-300 italic">"{payment.memo}"</p>}
+                    {payment.memo && <p className="text-gray-300 italic text-xs">"{payment.memo}"</p>}
                   </div>
                   
                   {/* Explorer link */}
@@ -277,31 +278,32 @@ const Dashboard = () => {
                 </div>
                 
                 {/* Actions */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-row sm:flex-col gap-2 w-full sm:w-auto">
                   {payment.status === 'confirmed' && !payment.proofId && (
                     <button
                       onClick={() => handleGenerateProof(payment)}
                       disabled={generatingProof}
-                      className="px-4 py-2.5 bg-gradient-to-r from-accent-purple to-accent-blue hover:opacity-90 text-white text-sm font-bold rounded-xl transition-all disabled:opacity-50 flex items-center gap-2 shadow-glow-purple"
+                      className="flex-1 sm:flex-none px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-accent-purple to-accent-blue hover:opacity-90 text-white text-xs sm:text-sm font-bold rounded-lg sm:rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 sm:gap-2 shadow-glow-purple"
                     >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                      Generate Proof
+                      <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                      <span className="hidden sm:inline">Generate Proof</span>
+                      <span className="sm:hidden">Proof</span>
                     </button>
                   )}
                   {payment.proofId && (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 w-full sm:w-auto">
                       <button
                         onClick={() => handleDownloadProofJSON(payment)}
-                        className="px-4 py-2.5 bg-dark-600 hover:bg-dark-500 text-gray-300 text-sm font-semibold rounded-xl transition-all border border-white/10 flex items-center gap-2"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 sm:py-2.5 bg-dark-600 hover:bg-dark-500 text-gray-300 text-xs sm:text-sm font-semibold rounded-lg sm:rounded-xl transition-all border border-white/10 flex items-center justify-center gap-1.5 sm:gap-2"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
                         JSON
                       </button>
                       <button
                         onClick={() => handleDownloadProofPDF(payment)}
-                        className="px-4 py-2.5 btn-primary text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 sm:py-2.5 btn-primary text-white text-xs sm:text-sm font-semibold rounded-lg sm:rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         PDF
                       </button>
                     </div>

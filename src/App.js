@@ -20,19 +20,19 @@ function App() {
             <Route path="/pay" element={<PaymentPage />} />
             
             <Route path="/" element={
-              <main className="flex-1 max-w-4xl mx-auto w-full px-6 py-10">
+              <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-10">
                 {/* Hero Section */}
-                <div className="mb-10 text-center sm:text-left">
-                  <h2 className="text-3xl font-bold text-white mb-2">Payment Portal</h2>
-                  <p className="text-gray-400">Create and manage USDT0 payments with ISO 20022 compliance</p>
+                <div className="mb-6 sm:mb-10 text-center sm:text-left">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Payment Portal</h2>
+                  <p className="text-sm sm:text-base text-gray-400">Create and manage USDT0 payments with ISO 20022 compliance</p>
                 </div>
                 
                 {/* Tabs */}
-                <div className="mb-8">
-                  <nav className="inline-flex gap-1 p-1.5 glass-card rounded-2xl">
+                <div className="mb-6 sm:mb-8">
+                  <nav className="flex sm:inline-flex gap-1 p-1.5 glass-card rounded-xl sm:rounded-2xl">
                     <button
                       onClick={() => setActiveTab('create')}
-                      className={`relative px-6 py-3 text-sm font-semibold rounded-xl transition-all flex items-center gap-2 ${
+                      className={`flex-1 sm:flex-none relative px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold rounded-lg sm:rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${
                         activeTab === 'create'
                           ? 'btn-primary text-white'
                           : 'text-gray-400 hover:text-white hover:bg-dark-600'
@@ -41,11 +41,12 @@ function App() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                       </svg>
-                      Create Payment
+                      <span className="hidden sm:inline">Create Payment</span>
+                      <span className="sm:hidden">Create</span>
                     </button>
                     <button
                       onClick={() => setActiveTab('dashboard')}
-                      className={`relative px-6 py-3 text-sm font-semibold rounded-xl transition-all flex items-center gap-2 ${
+                      className={`flex-1 sm:flex-none relative px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold rounded-lg sm:rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${
                         activeTab === 'dashboard'
                           ? 'btn-primary text-white'
                           : 'text-gray-400 hover:text-white hover:bg-dark-600'
@@ -54,7 +55,8 @@ function App() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                       </svg>
-                      Transactions
+                      <span className="hidden sm:inline">Transactions</span>
+                      <span className="sm:hidden">History</span>
                     </button>
                   </nav>
                 </div>
