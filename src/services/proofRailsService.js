@@ -98,6 +98,13 @@ class ProofRailsService {
   }
 
   /**
+   * Generate proof (alias for generateReceipt for backward compatibility)
+   */
+  async generateProof(paymentData) {
+    return this.generateReceipt(paymentData);
+  }
+
+  /**
    * Verify a receipt on-chain
    * 
    * @param {string} receiptIdOrHash - Receipt ID or transaction hash
