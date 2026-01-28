@@ -60,6 +60,7 @@ class ProofRailsService {
 
   /**
    * Generate ISO 20022 receipt for a payment
+   * Uses the official ProofRails SDK templates.payment() method
    * 
    * @param {Object} paymentData - Payment details
    * @returns {Object} Receipt with ISO 20022 artifacts
@@ -71,21 +72,14 @@ class ProofRailsService {
     }
 
     try {
-      // Create receipt via ProofRails SDK
-      const receipt = await this.sdk.createReceipt({
-        amount: paymentData.amount.toString(),
-        currency: paymentData.currency || USDT0_CONFIG.symbol,
-        sender: paymentData.sender,
-        receiver: paymentData.recipient,
-        reference: paymentData.txHash,
+      // Use the templates.payment method for beginner-friendly receipt creation
+      const receipt = await this.sdk.templates.payment({
+        amount: parseFloat(paymentData.amount),
+        to: paymentData.recipient,
         purpose: paymentData.memo || 'Payment via FlarePayProof',
-        metadata: {
-          network: 'Flare Coston2 Testnet',
-          chainId: FLARE_CONFIG.chainId,
-          tokenContract: paymentData.tokenContract || USDT0_CONFIG.address,
-          blockNumber: paymentData.blockNumber,
-          timestamp: paymentData.timestamp
-        }
+        transactionHash: paymentData.txHash,
+        from: paymentData.sender,
+        currency: paymentData.currency || USDT0_CONFIG.symbol
       });
 
       console.log('ProofRails receipt created:', receipt.id);
