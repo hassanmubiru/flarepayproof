@@ -1,5 +1,13 @@
-import { ProofRails } from '@proofrails/sdk';
 import { FLARE_CONFIG, USDT0_CONFIG, CONTRACT_ADDRESSES } from '../config/flareConfig';
+
+// Dynamic import to prevent crashes if SDK fails to load
+let ProofRails = null;
+try {
+  const sdk = require('@proofrails/sdk');
+  ProofRails = sdk.ProofRails;
+} catch (e) {
+  console.warn('ProofRails SDK not available, using fallback mode');
+}
 
 /**
  * ProofRails Service
@@ -25,6 +33,11 @@ class ProofRailsService {
       
       if (!key || key === 'your_proofrails_api_key') {
         console.warn('ProofRails API key not configured. Get one from https://www.flarestudio.xyz/sdk/proofrails-sdk/create-api-key');
+        return false;
+      }
+
+      if (!ProofRails) {
+        console.warn('ProofRails SDK not loaded, using fallback mode');
         return false;
       }
 
