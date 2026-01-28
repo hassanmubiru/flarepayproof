@@ -12,9 +12,61 @@ const CreatePayment = ({ onPaymentCreated }) => {
   const [paymentLink, setPaymentLink] = useState('');
   const [createdPayment, setCreatedPayment] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [txResult, setTxResult] = useState(null);
 
-  const { createPaymentRequest, generatePaymentLink } = usePayment();
-  const { isConnected } = useWallet();
+  const { createPaymentRequest, generatePaymentLink, executeTransfer, getExplorerLink } = usePayment();
+  const { isConnected, balance } = useWallet();
+
+  // Direct send - creates and executes payment immediately
+  const handleSendNow = async (e) => {
+    e.preventDefault();
+
+    if (!isConnected) {
+      alert('Please connect your wallet first');
+      return;
+    }
+
+    if (!amount || parseFloat(amount) <= 0) {
+      alert('Please enter a valid amount');
+      return;
+    }
+
+    if (!recipient || !recipient.startsWith('0x') || recipient.length !== 42) {
+      alert('Please enter a valid recipient address');
+      return;
+    }
+
+    if (parseFloat(balance) < parseFloat(amount)) {
+      alert('Insufficient USDT0 balance');
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      // Create payment record
+      const payment = await createPaymentRequest(
+        amount,
+        recipient,
+        memo,
+        null
+      );
+
+      // Execute transfer immediately
+      const result = await executeTransfer(payment.id, recipient, amount);
+      setTxResult(result);
+      setCreatedPayment(payment);
+
+      if (onPaymentCreated) {
+        onPaymentCreated(payment);
+      }
+    } catch (error) {
+      console.error('Error sending payment:', error);
+      alert('Failed to send payment: ' + error.message);
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
