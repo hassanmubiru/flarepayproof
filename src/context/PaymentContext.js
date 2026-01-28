@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { Contract, parseUnits } from 'ethers';
-import { USDT0_CONFIG, ERC20_ABI, FLARE_CONFIG } from '../config/flareConfig';
+import { USDT0_CONFIG, ERC20_ABI, FLARE_CONFIG, CONTRACT_ADDRESSES, FLARE_PAY_PROOF_ABI } from '../config/flareConfig';
 import { useWallet } from './WalletContext';
+import proofRailsService from '../services/proofRailsService';
 
 const paymentReducer = (state, action) => {
   switch (action.type) {
@@ -97,6 +98,54 @@ export const PaymentProvider = ({ children }) => {
       // Wait for confirmation
       const receipt = await tx.wait();
 
+      // Create on-chain proof via FlarePayProof contract
+      let onChainProofId = null;
+      try {
+        console.log('Creating on-chain proof...');
+        const proofContract = new Contract(
+          CONTRACT_ADDRESSES.flarePayProof,
+          FLARE_PAY_PROOF_ABI,
+          signer
+        );
+        
+        // Get proof fee
+        const proofFee = await proofContract.proofFee();
+        
+        // Create proof on-chain
+        const proofTx = await proofContract.createProof(
+          tx.hash, // Use tx hash as bytes32
+          recipient,
+          USDT0_CONFIG.address,
+          amountInWei,
+          USDT0_CONFIG.decimals,
+          USDT0_CONFIG.symbol,
+          'TUSDT Payment via FlarePayProof',
+          { value: proofFee }
+        );
+        
+        const proofReceipt = await proofTx.wait();
+        console.log('On-chain proof created in block:', proofReceipt.blockNumber);
+        
+        // Extract proof ID from event
+        const proofEvent = proofReceipt.logs.find(log => {
+          try {
+            const parsed = proofContract.interface.parseLog(log);
+            return parsed?.name === 'ProofCreated';
+          } catch {
+            return false;
+          }
+        });
+        
+        if (proofEvent) {
+          const parsed = proofContract.interface.parseLog(proofEvent);
+          onChainProofId = parsed.args.proofId;
+          console.log('Proof ID:', onChainProofId);
+        }
+      } catch (proofError) {
+        console.error('Error creating on-chain proof:', proofError);
+        // Continue without on-chain proof - payment still succeeded
+      }
+
       // Update payment status
       dispatch({
         type: 'UPDATE_PAYMENT',
@@ -105,14 +154,15 @@ export const PaymentProvider = ({ children }) => {
           updates: {
             status: 'confirmed',
             confirmedAt: new Date().toISOString(),
-            blockNumber: receipt.blockNumber
+            blockNumber: receipt.blockNumber,
+            onChainProofId: onChainProofId
           }
         }
       });
 
       dispatch({ type: 'SET_LOADING', payload: false });
 
-      return { txHash: tx.hash, receipt };
+      return { txHash: tx.hash, receipt, onChainProofId };
     } catch (error) {
       console.error('Error executing transfer:', error);
       dispatch({
@@ -157,13 +207,45 @@ export const PaymentProvider = ({ children }) => {
     return `${FLARE_CONFIG.explorerUrl}/tx/${txHash}`;
   };
 
+  // Get proof contract link
+  const getProofContractLink = () => {
+    return `${FLARE_CONFIG.explorerUrl}/address/${CONTRACT_ADDRESSES.flarePayProof}`;
+  };
+
+  // Get on-chain proof by ID
+  const getOnChainProof = async (proofId) => {
+    try {
+      await proofRailsService.initReadOnly();
+      return await proofRailsService.getProofById(proofId);
+    } catch (error) {
+      console.error('Error fetching on-chain proof:', error);
+      return null;
+    }
+  };
+
+  // Get all on-chain proofs for current user
+  const getUserOnChainProofs = async () => {
+    if (!account) return [];
+    try {
+      await proofRailsService.initReadOnly();
+      return await proofRailsService.getUserProofs(account);
+    } catch (error) {
+      console.error('Error fetching user proofs:', error);
+      return [];
+    }
+  };
+
   const value = {
     ...state,
     createPaymentRequest,
     executeTransfer,
     generatePaymentLink,
     loadPaymentsFromStorage,
-    getExplorerLink
+    getExplorerLink,
+    getProofContractLink,
+    getOnChainProof,
+    getUserOnChainProofs,
+    proofContractAddress: CONTRACT_ADDRESSES.flarePayProof
   };
 
   return (
