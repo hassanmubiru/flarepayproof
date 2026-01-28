@@ -33,6 +33,16 @@ const initialState = {
 
 const WalletContext = createContext();
 
+// Detect if user is on mobile
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
+// Check if we're inside MetaMask's in-app browser
+const isMetaMaskBrowser = () => {
+  return window.ethereum && window.ethereum.isMetaMask;
+};
+
 export const useWallet = () => {
   const context = useContext(WalletContext);
   if (!context) {
@@ -50,7 +60,16 @@ export const WalletProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING', payload: true });
       dispatch({ type: 'SET_ERROR', payload: null });
 
+      // On mobile without ethereum provider, open in MetaMask app
       if (!window.ethereum) {
+        if (isMobile()) {
+          // Deep link to MetaMask mobile app - opens the current page in MetaMask browser
+          const currentUrl = window.location.href;
+          const metamaskDeepLink = `https://metamask.app.link/dapp/${currentUrl.replace(/^https?:\/\//, '')}`;
+          window.location.href = metamaskDeepLink;
+          dispatch({ type: 'SET_LOADING', payload: false });
+          return;
+        }
         throw new Error('MetaMask not installed. Please install MetaMask to continue.');
       }
 
