@@ -117,6 +117,8 @@ const CreatePayment = ({ onPaymentCreated }) => {
     setPaymentLink('');
     setCreatedPayment(null);
     setCopied(false);
+    setIsSending(false);
+    setTxResult(null);
   };
 
   const copyToClipboard = (text) => {
