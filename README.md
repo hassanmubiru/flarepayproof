@@ -1,10 +1,20 @@
 # FlarePayProof - USDT0 Payments Portal with ProofRails
 
-A production-ready, mobile-responsive React web application for the Flare ProofRails Hackathon (Track 1). This app enables merchants, freelancers, and teams to send/receive USDT0 on Flare mainnet with automatic ISO 20022-aligned audit records via live ProofRails integration.
+A production-ready, mobile-responsive React web application for the Flare ProofRails Hackathon (Track 1). This app enables merchants, freelancers, and teams to send/receive USDT0 on Flare Coston2 Testnet with automatic ISO 20022-aligned audit records via on-chain proof anchoring.
 
 ## 🚀 Live Demo
 
-**[Deploy URL will be here after deployment to Vercel/Netlify]**
+**https://flarepayproof.vercel.app**
+
+## 📝 Deployed Smart Contracts (Coston2 Testnet)
+
+| Contract | Address |
+|----------|---------|
+| FlarePayProof | `0x8E453a9EE27ea69998817E7C6307Be1ED00dAa92` |
+| PaymentProcessor | `0xD952260dB8bF53f16532E763683B588576f85470` |
+| TUSDT Test Token | `0x3e86507116aC86E292d69693c25db78E71C3a36f` |
+
+**Explorer**: https://coston2-explorer.flare.network
 
 ## ✨ Features
 
