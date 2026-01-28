@@ -99,6 +99,22 @@ class ProofRailsService {
   }
 
   /**
+   * Download proof as JSON file
+   */
+  downloadProofJSON(proof) {
+    const dataStr = JSON.stringify(proof, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `proof_${proof.id || Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  /**
    * Verify a receipt on-chain
    * 
    * @param {string} receiptIdOrHash - Receipt ID or transaction hash
