@@ -43,6 +43,22 @@ export const PaymentProvider = ({ children }) => {
   const [state, dispatch] = useReducer(paymentReducer, initialState);
   const { provider, account } = useWallet();
 
+  // Save payment to localStorage
+  const savePaymentToStorage = (payment) => {
+    const payments = JSON.parse(localStorage.getItem('flarepay_payments') || '[]');
+    payments.push(payment);
+    localStorage.setItem('flarepay_payments', JSON.stringify(payments));
+  };
+
+  // Update payment in localStorage
+  const updatePaymentInStorage = (paymentId, updates) => {
+    const payments = JSON.parse(localStorage.getItem('flarepay_payments') || '[]');
+    const updatedPayments = payments.map(p =>
+      p.id === paymentId ? { ...p, ...updates } : p
+    );
+    localStorage.setItem('flarepay_payments', JSON.stringify(updatedPayments));
+  };
+
   // Create payment request
   const createPaymentRequest = async (amount, recipient, memo, expiry) => {
     const paymentId = `pay_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
