@@ -16,11 +16,49 @@ export const FLARE_CONFIG = {
 // Deployed SimpleTestToken contract on Coston2
 export const USDT0_CONFIG = {
   // Deployed test token address on Coston2
-  address: '0x0024cD1AE97d42e3eEA57f7194473F6a83513FAB',
+  address: '0x3e86507116aC86E292d69693c25db78E71C3a36f',
   decimals: 6,
   symbol: 'TUSDT',
   name: 'Test USDT (Coston2 Testnet)'
 };
+
+// Smart Contract Addresses (Coston2 Testnet)
+export const CONTRACT_ADDRESSES = {
+  flarePayProof: '0x8E453a9EE27ea69998817E7C6307Be1ED00dAa92',
+  paymentProcessor: '0xD952260dB8bF53f16532E763683B588576f85470',
+  testToken: '0x3e86507116aC86E292d69693c25db78E71C3a36f'
+};
+
+// FlarePayProof Contract ABI
+export const FLARE_PAY_PROOF_ABI = [
+  'function createProof(bytes32 _txHash, address _recipient, address _tokenContract, uint256 _amount, uint8 _decimals, string _tokenSymbol, string _memo) external payable returns (bytes32 proofId)',
+  'function verifyProofWithFDC(bytes32 _proofId, uint256 _fdcRoundId, bytes32 _merkleRoot) external',
+  'function createPaymentRequest(address _recipient, address _tokenContract, uint256 _amount, string _memo, uint256 _expiresIn) external returns (bytes32 requestId)',
+  'function fulfillPaymentRequest(bytes32 _requestId, bytes32 _proofId) external',
+  'function getProof(bytes32 _proofId) external view returns (tuple(bytes32 proofId, string messageType, bytes32 txHash, uint256 blockNumber, uint256 timestamp, address sender, address recipient, address tokenContract, uint256 amount, uint8 decimals, string tokenSymbol, string memo, uint256 fdcRoundId, bytes32 merkleRoot, uint8 status, uint256 proofCreatedAt))',
+  'function getProofByTxHash(bytes32 _txHash) external view returns (bytes32)',
+  'function getUserProofs(address _user) external view returns (bytes32[])',
+  'function getPaymentRequest(bytes32 _requestId) external view returns (tuple(bytes32 requestId, address creator, address recipient, address tokenContract, uint256 amount, string memo, uint256 createdAt, uint256 expiresAt, bool fulfilled, bytes32 proofId))',
+  'function getUserPaymentRequests(address _user) external view returns (bytes32[])',
+  'function getISO20022MessageId(bytes32 _proofId) external view returns (string)',
+  'function isFDCVerified(bytes32 _proofId) external view returns (bool)',
+  'function proofFee() external view returns (uint256)',
+  'function totalProofs() external view returns (uint256)',
+  'event ProofCreated(bytes32 indexed proofId, bytes32 indexed txHash, address indexed sender, address recipient, uint256 amount, string tokenSymbol)',
+  'event ProofVerified(bytes32 indexed proofId, uint8 status, uint256 fdcRoundId, bytes32 merkleRoot)',
+  'event PaymentRequestCreated(bytes32 indexed requestId, address indexed creator, address recipient, uint256 amount, uint256 expiresAt)',
+  'event PaymentRequestFulfilled(bytes32 indexed requestId, bytes32 indexed proofId, address indexed payer)'
+];
+
+// PaymentProcessor Contract ABI
+export const PAYMENT_PROCESSOR_ABI = [
+  'function processPayment(address _recipient, address _tokenContract, uint256 _amount, string _memo) external returns (bytes32 paymentId, bytes32 proofId)',
+  'function getPayment(bytes32 _paymentId) external view returns (tuple(bytes32 paymentId, address sender, address recipient, address tokenContract, uint256 amount, string memo, uint256 timestamp, bytes32 proofId))',
+  'function getUserPayments(address _user) external view returns (bytes32[])',
+  'function supportedTokens(address) external view returns (bool)',
+  'function totalPayments() external view returns (uint256)',
+  'event PaymentProcessed(bytes32 indexed paymentId, address indexed sender, address indexed recipient, address tokenContract, uint256 amount, bytes32 proofId)'
+];
 
 // ERC20 ABI (minimal for USDT0 operations)
 export const ERC20_ABI = [
