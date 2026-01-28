@@ -13,11 +13,10 @@ export const FLARE_CONFIG = {
 };
 
 // Test USDT Token Configuration (for Coston2 testnet)
-// You can deploy your own ERC20 test token or use an existing one
+// Deployed SimpleTestToken contract on Coston2
 export const USDT0_CONFIG = {
-  // Test token address on Coston2 - deploy your own ERC20 token for testing
-  // or use this placeholder (you'll need to deploy a test token)
-  address: '0x0000000000000000000000000000000000000000', // Replace with your test token
+  // Deployed test token address on Coston2
+  address: '0x0024cD1AE97d42e3eEA57f7194473F6a83513FAB',
   decimals: 6,
   symbol: 'TUSDT',
   name: 'Test USDT (Coston2 Testnet)'
