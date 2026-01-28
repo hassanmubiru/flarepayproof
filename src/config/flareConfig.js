@@ -35,11 +35,24 @@ export const ERC20_ABI = [
   'event Approval(address indexed owner, address indexed spender, uint256 value)'
 ];
 
-// ProofRails API Configuration
+// Flare Data Connector (FDC) Configuration
+// FDC is Flare's enshrined oracle for verifiable cross-chain data attestation
+export const FDC_CONFIG = {
+  // FDC Verifier service (Coston2 testnet)
+  verifierUrl: 'https://fdc-verifiers-testnet.flare.network',
+  // Data Availability Layer for proof retrieval
+  daLayerUrl: 'https://fdc-da-testnet.flare.network',
+  // API key for FDC services (public testnet key)
+  apiKey: process.env.REACT_APP_FDC_API_KEY || 'public-testnet',
+  // FDC Hub contract on Coston2
+  fdcHubAddress: '0x1c78A073E3BD2aCa4cc327d55FB0cD4f0549B55b',
+  // FDC Verification contract
+  fdcVerificationAddress: '0x...' // Retrieved via ContractRegistry
+};
+
+// ProofRails API Configuration (Legacy - now using FDC)
 export const PROOFRAILS_CONFIG = {
-  // ProofRails API endpoint (check official documentation)
   apiUrl: 'https://api.proofrails.com/v1',
-  // You'll need to get API key from ProofRails dashboard
   apiKey: process.env.REACT_APP_PROOFRAILS_API_KEY || ''
 };
 
