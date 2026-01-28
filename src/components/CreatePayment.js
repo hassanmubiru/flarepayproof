@@ -127,6 +127,67 @@ const CreatePayment = ({ onPaymentCreated }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Success screen for direct send
+  if (txResult && createdPayment) {
+    return (
+      <div className="glass-card gradient-border rounded-2xl p-8 fade-in">
+        <div className="text-center mb-8">
+          <div className="relative inline-flex">
+            <div className="absolute inset-0 bg-accent-green/20 rounded-full blur-xl"></div>
+            <div className="relative w-16 h-16 bg-gradient-to-br from-accent-green to-accent-green/80 rounded-full flex items-center justify-center shadow-glow-green">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          </div>
+          <h3 className="text-xl font-bold text-white mt-4">Payment Sent!</h3>
+          <p className="text-gray-400 mt-1">Your transaction has been confirmed on-chain</p>
+        </div>
+
+        <div className="bg-dark-700/50 rounded-xl p-6 mb-6 text-center border border-white/5">
+          <p className="text-sm text-gray-400 mb-1 uppercase tracking-wider">Amount Sent</p>
+          <p className="text-4xl font-bold text-white">{createdPayment.amount} <span className="text-brand-400">USDT0</span></p>
+        </div>
+
+        <div className="space-y-4 mb-6">
+          <div>
+            <p className="text-xs text-gray-400 mb-2 font-semibold uppercase tracking-wider">Recipient</p>
+            <p className="font-mono text-xs text-gray-300 bg-dark-700/50 p-3 rounded-xl break-all border border-white/10">{createdPayment.recipient}</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-400 mb-2 font-semibold uppercase tracking-wider">Transaction Hash</p>
+            <p className="font-mono text-xs text-accent-green bg-dark-700/50 p-3 rounded-xl break-all border border-white/10">{txResult.txHash}</p>
+          </div>
+          {txResult.onChainProofId && (
+            <div className="bg-accent-purple/10 border border-accent-purple/30 rounded-xl p-4">
+              <p className="text-xs text-accent-purple font-semibold mb-1">✓ ISO 20022 On-Chain Proof Created</p>
+              <p className="font-mono text-xs text-gray-300">Proof ID: {txResult.onChainProofId.toString().slice(0, 16)}...</p>
+            </div>
+          )}
+        </div>
+
+        <div className="flex gap-3">
+          <button
+            onClick={handleReset}
+            className="flex-1 px-4 py-3 bg-dark-600 hover:bg-dark-500 text-gray-300 border border-white/10 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+            Send Another
+          </button>
+          <a
+            href={getExplorerLink(txResult.txHash)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 px-4 py-3 btn-primary text-white rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2"
+          >
+            View on Explorer
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   if (showLink && createdPayment) {
     return (
       <div className="glass-card gradient-border rounded-2xl p-8 fade-in">
