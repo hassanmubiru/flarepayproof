@@ -216,22 +216,6 @@ export const PaymentProvider = ({ children }) => {
     return `${baseUrl}/pay?${params.toString()}`;
   };
 
-  // Save payment to localStorage
-  const savePaymentToStorage = (payment) => {
-    const payments = JSON.parse(localStorage.getItem('flarepay_payments') || '[]');
-    payments.push(payment);
-    localStorage.setItem('flarepay_payments', JSON.stringify(payments));
-  };
-
-  // Update payment in localStorage
-  const updatePaymentInStorage = (paymentId, updates) => {
-    const payments = JSON.parse(localStorage.getItem('flarepay_payments') || '[]');
-    const updatedPayments = payments.map(p =>
-      p.id === paymentId ? { ...p, ...updates } : p
-    );
-    localStorage.setItem('flarepay_payments', JSON.stringify(updatedPayments));
-  };
-
   // Load payments from localStorage
   const loadPaymentsFromStorage = () => {
     const payments = JSON.parse(localStorage.getItem('flarepay_payments') || '[]');
