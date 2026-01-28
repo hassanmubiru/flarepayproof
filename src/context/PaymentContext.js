@@ -94,6 +94,9 @@ export const PaymentProvider = ({ children }) => {
           updates: { txHash: tx.hash, status: 'confirming' }
         }
       });
+      
+      // Also update localStorage
+      updatePaymentInStorage(paymentId, { txHash: tx.hash, status: 'confirming' });
 
       // Wait for confirmation
       const receipt = await tx.wait();
@@ -147,31 +150,39 @@ export const PaymentProvider = ({ children }) => {
       }
 
       // Update payment status
+      const confirmedUpdates = {
+        status: 'confirmed',
+        confirmedAt: new Date().toISOString(),
+        blockNumber: receipt.blockNumber,
+        onChainProofId: onChainProofId
+      };
+      
       dispatch({
         type: 'UPDATE_PAYMENT',
         payload: {
           id: paymentId,
-          updates: {
-            status: 'confirmed',
-            confirmedAt: new Date().toISOString(),
-            blockNumber: receipt.blockNumber,
-            onChainProofId: onChainProofId
-          }
+          updates: confirmedUpdates
         }
       });
+      
+      // Also update localStorage
+      updatePaymentInStorage(paymentId, confirmedUpdates);
 
       dispatch({ type: 'SET_LOADING', payload: false });
 
       return { txHash: tx.hash, receipt, onChainProofId };
     } catch (error) {
       console.error('Error executing transfer:', error);
+      const failedUpdates = { status: 'failed', error: error.message };
       dispatch({
         type: 'UPDATE_PAYMENT',
         payload: {
           id: paymentId,
-          updates: { status: 'failed', error: error.message }
+          updates: failedUpdates
         }
       });
+      // Also update localStorage
+      updatePaymentInStorage(paymentId, failedUpdates);
       dispatch({ type: 'SET_LOADING', payload: false });
       throw error;
     }
@@ -194,6 +205,15 @@ export const PaymentProvider = ({ children }) => {
     const payments = JSON.parse(localStorage.getItem('flarepay_payments') || '[]');
     payments.push(payment);
     localStorage.setItem('flarepay_payments', JSON.stringify(payments));
+  };
+
+  // Update payment in localStorage
+  const updatePaymentInStorage = (paymentId, updates) => {
+    const payments = JSON.parse(localStorage.getItem('flarepay_payments') || '[]');
+    const updatedPayments = payments.map(p =>
+      p.id === paymentId ? { ...p, ...updates } : p
+    );
+    localStorage.setItem('flarepay_payments', JSON.stringify(updatedPayments));
   };
 
   // Load payments from localStorage
