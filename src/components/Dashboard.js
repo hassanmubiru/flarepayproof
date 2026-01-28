@@ -128,33 +128,58 @@ const Dashboard = () => {
     return styles[status] || 'bg-dark-600 text-gray-400 border-dark-500';
   };
 
+  const getStatusIcon = (status) => {
+    switch(status) {
+      case 'pending':
+        return <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
+      case 'confirming':
+        return <svg className="w-3.5 h-3.5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>;
+      case 'confirmed':
+        return <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>;
+      case 'failed':
+        return <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="bg-dark-800 rounded-xl border border-dark-600">
+    <div className="glass-card gradient-border rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="p-6 border-b border-dark-700">
+      <div className="p-6 border-b border-white/5">
         <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold text-gray-100">Transactions</h2>
-            <p className="text-sm text-gray-400">{filteredPayments.length} payment{filteredPayments.length !== 1 ? 's' : ''}</p>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-accent-purple to-accent-blue rounded-xl flex items-center justify-center shadow-glow-purple">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">Transactions</h2>
+              <p className="text-sm text-gray-400">{filteredPayments.length} payment{filteredPayments.length !== 1 ? 's' : ''} found</p>
+            </div>
           </div>
           <button
             onClick={() => { loadPaymentsFromStorage(); refreshBalance(); }}
-            className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-gray-200 hover:bg-dark-700 rounded-lg transition-colors"
+            className="px-4 py-2 text-sm font-semibold text-gray-400 hover:text-white hover:bg-dark-600 rounded-xl transition-all flex items-center gap-2 group"
           >
+            <svg className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
             Refresh
           </button>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="p-4 border-b border-dark-700 bg-dark-800/50">
+      <div className="p-4 border-b border-white/5 bg-dark-800/30">
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1">Status</label>
+            <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">Status</label>
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-dark-600 rounded-lg text-sm bg-dark-700 text-gray-100"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-xl text-sm bg-dark-700/50 text-white focus:border-brand-500 focus:outline-none"
             >
               <option value="all">All</option>
               <option value="pending">Pending</option>
@@ -164,29 +189,29 @@ const Dashboard = () => {
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1">From</label>
+            <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">From</label>
             <input
               type="date"
               value={dateFrom}
               onChange={(e) => setDateFrom(e.target.value)}
-              className="w-full px-3 py-2 border border-dark-600 rounded-lg text-sm bg-dark-700 text-gray-100"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-xl text-sm bg-dark-700/50 text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-400 mb-1">To</label>
+            <label className="block text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wider">To</label>
             <input
               type="date"
               value={dateTo}
               onChange={(e) => setDateTo(e.target.value)}
-              className="w-full px-3 py-2 border border-dark-600 rounded-lg text-sm bg-dark-700 text-gray-100"
+              className="w-full px-4 py-2.5 border border-white/10 rounded-xl text-sm bg-dark-700/50 text-white focus:border-brand-500 focus:outline-none"
             />
           </div>
           <div className="flex items-end">
             <button
               onClick={() => { setFilter('all'); setDateFrom(''); setDateTo(''); }}
-              className="w-full px-3 py-2 text-sm text-gray-400 hover:text-gray-200 hover:bg-dark-700 rounded-lg transition-colors"
+              className="w-full px-4 py-2.5 text-sm font-semibold text-gray-400 hover:text-white hover:bg-dark-600 rounded-xl transition-all"
             >
-              Clear
+              Clear Filters
             </button>
           </div>
         </div>
@@ -194,39 +219,44 @@ const Dashboard = () => {
 
       {/* Payments List */}
       {filteredPayments.length === 0 ? (
-        <div className="p-12 text-center">
-          <div className="w-12 h-12 bg-dark-700 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="p-16 text-center">
+          <div className="w-16 h-16 bg-dark-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <h3 className="text-sm font-medium text-gray-100 mb-1">No Transactions</h3>
-          <p className="text-sm text-gray-400">Create a payment request to get started</p>
+          <h3 className="text-lg font-semibold text-white mb-1">No Transactions Yet</h3>
+          <p className="text-gray-400">Create a payment request to get started</p>
         </div>
       ) : (
-        <div className="divide-y divide-dark-700">
+        <div className="divide-y divide-white/5">
           {filteredPayments.map((payment) => (
-            <div key={payment.id} className="p-5 hover:bg-dark-700/50 transition-colors">
-              <div className="flex items-start justify-between gap-4">
+            <div key={payment.id} className="p-6 hover:bg-dark-700/30 transition-all">
+              <div className="flex items-start justify-between gap-6">
                 <div className="flex-1 min-w-0">
                   {/* Status and amount row */}
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className={`px-2 py-1 rounded text-xs font-medium border ${getStatusBadge(payment.status)}`}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold border ${getStatusBadge(payment.status)}`}>
+                      {getStatusIcon(payment.status)}
                       {payment.status}
                     </span>
-                    <span className="text-lg font-semibold text-gray-100">{payment.amount} <span className="text-brand-500">USDT0</span></span>
+                    <span className="text-xl font-bold text-white">{payment.amount} <span className="text-brand-400">USDT0</span></span>
                     {payment.proofId && (
-                      <span className="px-2 py-1 rounded text-xs font-medium bg-accent-purple/20 text-accent-purple border border-accent-purple/30">
-                        Verified
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-accent-purple/20 text-accent-purple border border-accent-purple/30">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        ISO 20022 Verified
                       </span>
                     )}
                   </div>
                   
                   {/* Details */}
-                  <div className="text-sm text-gray-400 space-y-1">
-                    <p className="font-mono text-xs">{payment.recipient}</p>
-                    <p>{new Date(payment.createdAt).toLocaleDateString()} at {new Date(payment.createdAt).toLocaleTimeString()}</p>
-                    {payment.memo && <p className="text-gray-300">{payment.memo}</p>}
+                  <div className="text-sm text-gray-400 space-y-1.5">
+                    <p className="font-mono text-xs bg-dark-700/50 px-3 py-1.5 rounded-lg inline-block">{payment.recipient}</p>
+                    <p className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                      {new Date(payment.createdAt).toLocaleDateString()} at {new Date(payment.createdAt).toLocaleTimeString()}
+                    </p>
+                    {payment.memo && <p className="text-gray-300 italic">"{payment.memo}"</p>}
                   </div>
                   
                   {/* Explorer link */}
@@ -235,10 +265,11 @@ const Dashboard = () => {
                       href={getExplorerLink(payment.txHash)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 mt-2 text-sm text-brand-400 hover:text-brand-300"
+                      className="inline-flex items-center gap-1.5 mt-3 text-sm font-medium text-brand-400 hover:text-brand-300 transition-colors group"
                     >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                       View on Explorer
-                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
                       </svg>
                     </a>
@@ -251,8 +282,9 @@ const Dashboard = () => {
                     <button
                       onClick={() => handleGenerateProof(payment)}
                       disabled={generatingProof}
-                      className="px-3 py-2 bg-accent-purple hover:bg-accent-purple/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+                      className="px-4 py-2.5 bg-gradient-to-r from-accent-purple to-accent-blue hover:opacity-90 text-white text-sm font-bold rounded-xl transition-all disabled:opacity-50 flex items-center gap-2 shadow-glow-purple"
                     >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                       Generate Proof
                     </button>
                   )}
@@ -260,14 +292,16 @@ const Dashboard = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleDownloadProofJSON(payment)}
-                        className="px-3 py-2 bg-dark-700 hover:bg-dark-600 text-gray-300 text-sm font-medium rounded-lg transition-colors border border-dark-600"
+                        className="px-4 py-2.5 bg-dark-600 hover:bg-dark-500 text-gray-300 text-sm font-semibold rounded-xl transition-all border border-white/10 flex items-center gap-2"
                       >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
                         JSON
                       </button>
                       <button
                         onClick={() => handleDownloadProofPDF(payment)}
-                        className="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium rounded-lg transition-colors"
+                        className="px-4 py-2.5 btn-primary text-white text-sm font-semibold rounded-xl transition-all flex items-center gap-2"
                       >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         PDF
                       </button>
                     </div>

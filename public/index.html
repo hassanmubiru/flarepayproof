@@ -29,25 +29,45 @@
             },
             colors: {
               dark: {
+                950: '#050508',
                 900: '#0a0a0f',
-                800: '#12121a',
-                700: '#1a1a24',
-                600: '#22222e',
-                500: '#2a2a38',
-                400: '#3a3a4a',
+                800: '#101018',
+                700: '#18181f',
+                600: '#1f1f28',
+                500: '#28283a',
+                400: '#38384a',
               },
               brand: {
+                300: '#ff8a7a',
                 400: '#ff6b5b',
                 500: '#E54033',
                 600: '#C9302B',
+                700: '#a02520',
               },
               accent: {
-                green: '#10b981',
+                green: '#22c55e',
                 blue: '#3b82f6',
-                purple: '#8b5cf6',
+                purple: '#a855f7',
                 amber: '#f59e0b',
+                cyan: '#06b6d4',
               }
             },
+            boxShadow: {
+              'glow-brand': '0 0 20px rgba(229, 64, 51, 0.3)',
+              'glow-green': '0 0 20px rgba(34, 197, 94, 0.3)',
+              'glow-purple': '0 0 20px rgba(168, 85, 247, 0.3)',
+              'card': '0 4px 24px rgba(0, 0, 0, 0.4)',
+            },
+            animation: {
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'shimmer': 'shimmer 2s linear infinite',
+            },
+            keyframes: {
+              shimmer: {
+                '0%': { backgroundPosition: '-200% 0' },
+                '100%': { backgroundPosition: '200% 0' },
+              }
+            }
           }
         }
       }
@@ -57,9 +77,62 @@
       * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
       :focus-visible { outline: 2px solid #E54033; outline-offset: 2px; }
       ::-webkit-scrollbar { width: 6px; height: 6px; }
-      ::-webkit-scrollbar-track { background: #1a1a24; }
-      ::-webkit-scrollbar-thumb { background: #3a3a4a; border-radius: 3px; }
-      ::-webkit-scrollbar-thumb:hover { background: #4a4a5a; }
+      ::-webkit-scrollbar-track { background: #101018; }
+      ::-webkit-scrollbar-thumb { background: #38384a; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: #48485a; }
+      
+      .glass-card {
+        background: linear-gradient(135deg, rgba(16, 16, 24, 0.9) 0%, rgba(24, 24, 31, 0.8) 100%);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      
+      .gradient-border {
+        position: relative;
+        background: linear-gradient(135deg, #101018 0%, #18181f 100%);
+      }
+      .gradient-border::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        padding: 1px;
+        border-radius: inherit;
+        background: linear-gradient(135deg, rgba(229, 64, 51, 0.3) 0%, rgba(168, 85, 247, 0.2) 50%, rgba(59, 130, 246, 0.2) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+      
+      .btn-primary {
+        background: linear-gradient(135deg, #E54033 0%, #ff6b5b 100%);
+        box-shadow: 0 4px 14px rgba(229, 64, 51, 0.35);
+        transition: all 0.2s ease;
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(229, 64, 51, 0.45);
+      }
+      
+      .input-glow:focus {
+        box-shadow: 0 0 0 3px rgba(229, 64, 51, 0.15);
+      }
+      
+      .fade-in {
+        animation: fadeIn 0.3s ease-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .bg-mesh {
+        background-image: 
+          radial-gradient(at 80% 20%, rgba(229, 64, 51, 0.08) 0px, transparent 50%),
+          radial-gradient(at 20% 80%, rgba(168, 85, 247, 0.06) 0px, transparent 50%),
+          radial-gradient(at 50% 50%, rgba(59, 130, 246, 0.04) 0px, transparent 50%);
+      }
     </style>
   </head>
   <body class="bg-dark-900 text-gray-100">
