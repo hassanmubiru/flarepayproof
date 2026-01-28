@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { WalletProvider } from './context/WalletContext';
 import { PaymentProvider } from './context/PaymentContext';
-import { ProofRailsProvider } from './context/ProofRailsContext';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import CreatePayment from './components/CreatePayment';
@@ -13,8 +12,7 @@ function App() {
 
   return (
     <WalletProvider>
-      <ProofRailsProvider>
-        <PaymentProvider>
+      <PaymentProvider>
           <div className="min-h-screen bg-dark-950 bg-mesh flex flex-col">
             <Header />
           
@@ -137,8 +135,7 @@ function App() {
             </div>
           </footer>
         </div>
-        </PaymentProvider>
-      </ProofRailsProvider>
+      </PaymentProvider>
     </WalletProvider>
   );
 }
