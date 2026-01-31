@@ -18,6 +18,10 @@
 .env.test.local
 .env.production.local
 
+# markdown files except README
+*.md
+!README.md
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
